@@ -16,9 +16,7 @@
 
 #### 1️⃣ 필수 라이브러리 설치
 ```
-
 pip install selenium pandas webdriver-manager
-
 ```
 
 #### 2️⃣ 입력 파일 준비
