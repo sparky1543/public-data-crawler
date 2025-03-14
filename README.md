@@ -27,27 +27,30 @@
 #### Python 스크립트 버전
 
 1. 필수 라이브러리 설치
-```bash
-pip install selenium pandas webdriver-manager
-```
+    ```bash
+    pip install selenium pandas webdriver-manager
+    ```
 
 2. 입력 파일 준비
-`data/기관코드.csv` 파일을 준비합니다.
+`data/기관코드.csv` 파일을 준비합니다.  
     - 기관 코드는 [행정표준코드관리시스템](https://www.code.go.kr/index.do)에서 확인할 수 있습니다.
     - CSV 파일은 '공공기관명'과 '기관코드' 두 개의 열(Column)로 구성됩니다.
 
 3. 크롤러 실행
-아래 명령어를 실행하면 `data` 폴더에 기관별 공공데이터 목록이 저장됩니다.
-```bash
-python public-data-crawler.py
-```
+
+    아래 명령어를 실행하면 `data` 폴더에 기관별 공공데이터 목록이 저장됩니다.
+    ```bash
+    python public-data-crawler.py
+    ```
 
 #### GUI 실행 파일 버전
 
 1. 다운로드
-Releases에서 `PublicDataCrawler_v1.0.0.exe` 파일을 다운로드합니다.
+
+    [Releases](https://github.com/sparky1543/public-data-crawler/releases/tag/v1.0.0)에서 `PublicDataCrawler_v1.0.0.exe` 파일을 다운로드합니다.
 
 2. 크롤러 실행
+
    - `public-data-crawler.exe` 실행  
    - `기관명`과 `기관코드` 입력 후 크롤링 시작 버튼 클릭
    - 크롤링 진행 상황을 GUI에서 실시간으로 확인
