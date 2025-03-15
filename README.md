@@ -32,13 +32,13 @@
     ```
 
 2. 입력 파일 준비
-`data/기관코드.csv` 파일을 준비합니다.  
-    - 기관 코드는 [행정표준코드관리시스템](https://www.code.go.kr/index.do)에서 확인할 수 있습니다.
-    - CSV 파일은 '공공기관명'과 '기관코드' 두 개의 열(Column)로 구성됩니다.
+`data/기관코드.csv` 파일을 준비  
+    - 기관 코드는 [행정표준코드관리시스템](https://www.code.go.kr/index.do)에서 확인
+    - CSV 파일은 '공공기관명'과 '기관코드' 두 개의 열(Column)로 구성
 
 3. 크롤러 실행
 
-    아래 명령어를 실행하면 `data` 폴더에 기관별 공공데이터 목록이 저장됩니다.
+    아래 명령어를 실행하면 `data` 폴더에 기관별 공공데이터 목록 저장
     ```bash
     python public-data-crawler.py
     ```
@@ -47,7 +47,7 @@
 
 1. 다운로드
 
-    [Releases](https://github.com/sparky1543/public-data-crawler/releases/tag/v1.0.0)에서 `PublicDataCrawler_v1.0.0.exe` 파일을 다운로드합니다.
+    [Releases](https://github.com/sparky1543/public-data-crawler/releases/tag/v1.0.0)에서 `PublicDataCrawler_v1.0.0.exe` 파일 다운로드
 
 2. 크롤러 실행
 
@@ -60,7 +60,7 @@
 
 - Python 3.6 이상 (스크립트 버전)
 - Windows 10/11 지원 (GUI 버전)
-- Chrome 브라우저 설치 필수 (자동 WebDriver 업데이트 포함)
+- Chrome 브라우저 설치 필수
 
 ### 변경 사항
 
