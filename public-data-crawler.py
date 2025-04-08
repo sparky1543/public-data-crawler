@@ -27,37 +27,6 @@ def click_org_search_button():
         print(f"제공기관별 검색 버튼 클릭 실패: {e}")
         driver.quit()
         exit()
-
-# 상세 페이지에서 설명 가져오기 함수
-def get_detail_description():
-    try:
-        # 상세 설명 찾기
-        description_element = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div.cont"))
-        )
-        
-        # 방법 1: innerHTML 가져오기
-        description_html = description_element.get_attribute('innerHTML')
-        
-        # <br> 태그를 줄바꿈으로 변환 (이 작업을 먼저 해야 <br>이 줄바꿈으로 올바르게 변환됨)
-        description_text = description_html.replace("<br>", "\n").replace("<br/>", "\n").replace("<br />", "\n")
-        
-        # 모든 HTML 태그 제거 (정규식 사용)
-        import re
-        description_text = re.sub(r'<[^>]*>', '', description_text)
-        
-        # HTML 엔티티 디코딩 (예: &amp; -> &)
-        import html
-        description_text = html.unescape(description_text)
-        
-        # 여러 줄바꿈 정리 및 앞뒤 공백 제거
-        description_text = re.sub(r'\n\s*\n', '\n\n', description_text)
-        description_text = description_text.strip()
-        
-        return description_text
-    except Exception as e:
-        print(f"상세 설명 가져오기 실패: {e}")
-        return "상세 설명 가져오기 실패"
         
 # 파일 데이터 수집 함수
 def scrape_file_data(org_name):
@@ -79,36 +48,13 @@ def scrape_file_data(org_name):
             items = result_list.find_elements(By.CSS_SELECTOR, "ul > li")
             for item in items:
                 try:
-                    data_name_element = item.find_element(By.CSS_SELECTOR, ".title")
-                    data_name = data_name_element.text.strip()
-                    
-                    # 데이터명 클릭하여 상세 페이지로 이동
-                    driver.execute_script("arguments[0].scrollIntoView(true);", data_name_element)
-                    time.sleep(0.5)
-                    driver.execute_script("arguments[0].click();", data_name_element)
-                    
-                    # 상세 페이지 로드 대기
-                    time.sleep(2)
-                    
-                    # 상세 설명 가져오기
-                    data_desc = get_detail_description()
-                    
-                    # 뒤로 가기
-                    driver.back()
-                    
-                    # 페이지 로드 대기
-                    time.sleep(2)
-                    
-                except Exception as e:
-                    print(f"데이터 항목 처리 중 오류: {e}")
+                    data_name = item.find_element(By.CSS_SELECTOR, ".title").text.strip()
+                except Exception:
                     data_name = "데이터명 없음"
+                try:
+                    data_desc = item.find_element(By.CSS_SELECTOR, ".ellipsis.publicDataDesc").text.strip()
+                except Exception:
                     data_desc = "데이터설명 없음"
-                    # 오류 발생 시 뒤로 가기 시도
-                    try:
-                        driver.back()
-                        time.sleep(2)
-                    except:
-                        pass
 
                 data_list.append({
                     "데이터명": data_name,
@@ -152,36 +98,13 @@ def scrape_api_data(org_name):
             items = result_list.find_elements(By.CSS_SELECTOR, "ul > li")
             for item in items:
                 try:
-                    data_name_element = item.find_element(By.CSS_SELECTOR, ".title")
-                    data_name = data_name_element.text.strip()
-                    
-                    # 데이터명 클릭하여 상세 페이지로 이동
-                    driver.execute_script("arguments[0].scrollIntoView(true);", data_name_element)
-                    time.sleep(0.5)
-                    driver.execute_script("arguments[0].click();", data_name_element)
-                    
-                    # 상세 페이지 로드 대기
-                    time.sleep(2)
-                    
-                    # 상세 설명 가져오기
-                    data_desc = get_detail_description()
-                    
-                    # 뒤로 가기
-                    driver.back()
-                    
-                    # 페이지 로드 대기
-                    time.sleep(2)
-                    
-                except Exception as e:
-                    print(f"데이터 항목 처리 중 오류: {e}")
+                    data_name = item.find_element(By.CSS_SELECTOR, ".title").text.strip()
+                except Exception:
                     data_name = "데이터명 없음"
+                try:
+                    data_desc = item.find_element(By.CSS_SELECTOR, ".ellipsis.publicDataDesc").text.strip()
+                except Exception:
                     data_desc = "데이터설명 없음"
-                    # 오류 발생 시 뒤로 가기 시도
-                    try:
-                        driver.back()
-                        time.sleep(2)
-                    except:
-                        pass
 
                 data_list.append({
                     "데이터명": data_name,
@@ -305,7 +228,6 @@ for index, row in df.iterrows():
     total_df = pd.concat([file_df, api_df], ignore_index=True)
     total_df.reset_index(drop=True, inplace=True)
 
-    # 결과 저장
     total_df.to_excel(f'./data/{org_name}_공공데이터목록.xlsx', index=False)
 
 # 모든 작업 완료 후 브라우저 종료
