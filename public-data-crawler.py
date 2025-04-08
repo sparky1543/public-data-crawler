@@ -48,7 +48,12 @@ def scrape_file_data(org_name):
             items = result_list.find_elements(By.CSS_SELECTOR, "ul > li")
             for item in items:
                 try:
-                    data_name = item.find_element(By.CSS_SELECTOR, ".title").text.strip()
+                    # title 또는 recent-title 클래스에서 제목 가져오기
+                    title_element = item.find_elements(By.CSS_SELECTOR, ".title, .recent-title")
+                    if title_element:
+                        data_name = title_element[0].text.strip()
+                    else:
+                        data_name = "데이터명 없음"
                 except Exception:
                     data_name = "데이터명 없음"
                 try:
@@ -98,7 +103,12 @@ def scrape_api_data(org_name):
             items = result_list.find_elements(By.CSS_SELECTOR, "ul > li")
             for item in items:
                 try:
-                    data_name = item.find_element(By.CSS_SELECTOR, ".title").text.strip()
+                    # title 또는 recent-title 클래스에서 제목 가져오기
+                    title_element = item.find_elements(By.CSS_SELECTOR, ".title, .recent-title")
+                    if title_element:
+                        data_name = title_element[0].text.strip()
+                    else:
+                        data_name = "데이터명 없음"
                 except Exception:
                     data_name = "데이터명 없음"
                 try:
